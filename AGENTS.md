@@ -8,7 +8,11 @@ Projeto de um POD do bootcamp **Software Engineering Project** (MBA em Engenhari
 
 ## 1. Confidencialidade (regra máxima, acima de qualquer outra)
 
-A empresa autorizou o projeto **com a condição de que ele seja genérico**. O repositório é compartilhado com o professor, e o histórico do git é permanente. **Nunca** registrar em código, docs, commits, PRs, issues, dados de teste, evals, diário, pitch ou em chamadas a serviços externos:
+A empresa autorizou o projeto **com a condição de que ele seja genérico**.
+
+**O repositório é público** por decisão do POD: qualquer pessoa na internet lê o código, os docs, os PRs, as issues e todo o histórico. Um commit com dado sensível continua exposto mesmo depois de apagado, porque o histórico e as cópias de terceiros permanecem, e limpar o histórico não garante a remoção. Por isso, a prevenção é a única defesa: revise antes de cada commit e de cada push.
+
+**Nunca** registrar em código, docs, commits, PRs, issues, dados de teste, evals, diário, pitch ou em chamadas a serviços externos:
 
 - nome da empresa, clientes, parceiros, produtos ou marcas internas;
 - nomes de sistemas, APIs, endpoints, objetos ou campos customizados, IDs de org, URLs ou domínios internos;
