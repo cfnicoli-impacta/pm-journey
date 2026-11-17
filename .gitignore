@@ -49,3 +49,4 @@ $RECYCLE.BIN/
 
 # Course materials
 *.pdf
+!docs/pitch/pitch.pdf
