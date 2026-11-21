@@ -160,6 +160,8 @@ Tirando a IA, F1 a F5 continuam resolvendo boa parte da dor, porque os alertas s
 
 ### Frontier atual para o grill
 
+> **Resultado (2026-11-21):** as rodadas 1 e 2 foram fechadas no grill do checkpoint 01 e gravadas no [Lean Canvas](lean-canvas.md), na [hipótese](hipotese.md) e no [PRD](prd.md). As decisões que divergiram da recomendação do agente estão no [diário](../diario/checkpoint-01.md). A rodada 3 (viabilidade técnica) fica para o checkpoint 04; a pergunta sobre "URL pública" está nas pendências do PRD.
+
 **Rodada 1: valor e IA** (pré-requisitos já decididos)
 1. Qual é a **uma** métrica principal? (recomendação: % de RRs que chegam à data de início confirmadas; alternativa: tempo médio de uma RR parada sem ação)
 2. O que a próxima melhor ação faz que uma regra fixa não faz? Escolher entre combinar sinais, justificar e antecipar (seção 6).
