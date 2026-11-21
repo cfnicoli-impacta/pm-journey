@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Staffing Command Center: reference mock</title>
+<!--
+  Reference mock of the initial idea, rebuilt with 100% synthetic data.
+  Not the checkpoint 03 prototype (that one will be unstyled HTML in /prototype/).
+  Input for the problem grill: docs/produto/roteiro-grill.md
+-->
+<style>
+  :root {
+    --brand: #0b5cab; --brand-dark: #032d60; --bg: #f3f3f3; --card: #fff;
+    --text: #181818; --muted: #5c5c5c; --line: #e5e5e5;
+    --red: #ba0517; --red-bg: #fef1ee; --orange: #dd7a01; --orange-bg: #fff6e8;
+    --green: #2e844a; --green-bg: #ebf7e6; --blue-bg: #eef4ff; --gray-bg: #f3f3f3;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 13px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--text); background: var(--bg); }
+  .banner { background: #fff3cd; border-bottom: 1px solid #e0c36a; padding: 6px 16px; font-size: 12px; }
+  header.global { background: var(--brand-dark); color: #fff; display: flex; align-items: center; gap: 16px; padding: 8px 16px; }
+  header.global .logo { width: 34px; height: 24px; border-radius: 12px; background: #1b96ff; }
+  header.global input { flex: 0 1 420px; border: 0; border-radius: 4px; padding: 6px 10px; }
+  nav.app { background: #fff; border-bottom: 3px solid var(--brand); display: flex; gap: 22px; padding: 0 16px; align-items: center; overflow-x: auto; }
+  nav.app .name { font-weight: 600; font-size: 15px; padding: 10px 0; white-space: nowrap; }
+  nav.app a { color: var(--text); text-decoration: none; padding: 12px 0; white-space: nowrap; }
+  nav.app a.active { border-bottom: 3px solid var(--brand); margin-bottom: -3px; font-weight: 600; }
+  main { padding: 12px 16px 32px; }
+  .welcome { background: #fff; border-radius: 4px; padding: 10px 14px; margin-bottom: 10px; }
+  .welcome h1 { margin: 0; font-size: 16px; }
+  .subtabs { background: #fff; border-radius: 4px; display: flex; gap: 26px; padding: 0 14px; overflow-x: auto; margin-bottom: 12px; }
+  .subtabs span { padding: 12px 0; color: var(--muted); white-space: nowrap; }
+  .subtabs span.active { color: var(--text); font-weight: 600; border-bottom: 3px solid var(--brand); }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 12px; }
+  .kpi { background: var(--card); border-radius: 4px; border-top: 3px solid var(--brand); padding: 10px 14px; }
+  .kpi.green { border-color: var(--green); } .kpi.red { border-color: var(--red); } .kpi.orange { border-color: var(--orange); } .kpi.teal { border-color: #0b827c; }
+  .kpi .label { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .kpi .value { font-size: 26px; font-weight: 700; }
+  .kpi .hint { font-size: 11px; color: var(--muted); }
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 12px; align-items: start; }
+  @media (max-width: 1000px) { .layout { grid-template-columns: 1fr; } }
+  section.list { background: var(--card); border-radius: 4px; margin-bottom: 12px; overflow: hidden; }
+  section.list > .head { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 10px 14px; border-bottom: 2px solid var(--brand); }
+  section.list.awaiting > .head { border-color: var(--orange); }
+  section.list.staffed > .head { border-color: var(--green); }
+  section.list h2 { margin: 0; font-size: 14px; }
+  .count { display: inline-block; min-width: 20px; padding: 0 6px; border-radius: 10px; background: var(--brand); color: #fff; font-size: 11px; text-align: center; }
+  .awaiting .count { background: var(--orange); } .staffed .count { background: var(--green); }
+  .head input { border: 1px solid var(--line); border-radius: 4px; padding: 4px 8px; }
+  .head .meta { margin-left: auto; font-size: 11px; color: var(--muted); }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; padding: 8px 14px; }
+  .chip { border: 1px solid #c9c9c9; background: #fff; border-radius: 14px; padding: 3px 10px; cursor: pointer; font: inherit; font-size: 12px; }
+  .chip.on { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; white-space: nowrap; }
+  th { text-align: left; font-size: 11px; color: var(--muted); font-weight: 600; padding: 6px 10px; border-bottom: 1px solid var(--line); background: #fafafa; }
+  td { padding: 6px 10px; border-bottom: 1px solid var(--line); }
+  tr.hot td { background: var(--red-bg); }
+  tr.attn td:first-child { box-shadow: inset 3px 0 0 var(--orange); }
+  td a { color: var(--brand); text-decoration: none; }
+  .pill { display: inline-block; border-radius: 10px; padding: 1px 8px; font-size: 11px; border: 1px solid; }
+  .pill.partner { color: var(--brand); background: var(--blue-bg); border-color: #b0c8ee; }
+  .pill.internal { color: #0b827c; background: #e6f6f5; border-color: #9fd8d4; }
+  .pill.halted { color: var(--red); background: var(--red-bg); border-color: #f5b5ab; }
+  .pill.attempt { color: #fff; background: var(--red); border-color: var(--red); }
+  .pill.wait { color: #8c4b02; background: var(--orange-bg); border-color: #f2c37c; }
+  .pill.ok { color: var(--green); background: var(--green-bg); border-color: #a6d9b5; }
+  .pill.pool { color: var(--muted); background: var(--gray-bg); border-color: #d0d0d0; }
+  .dot::before { content: "●"; margin-right: 4px; color: var(--brand); }
+  .dot.ready::before, .dot.pending::before { color: var(--orange); }
+  .dot.staffed::before { color: var(--green); }
+  .high { color: var(--red); font-weight: 600; }
+  .warn { color: var(--red); font-weight: 600; }
+  .bucket::before { content: "●"; margin-right: 4px; }
+  .bucket.g::before { color: var(--green); } .bucket.y::before { color: #d9a400; } .bucket.r::before { color: var(--red); }
+  .pager { display: flex; gap: 10px; align-items: center; padding: 8px 14px; font-size: 12px; }
+  .pager button, .btn { font: inherit; font-size: 12px; border-radius: 4px; border: 1px solid #c9c9c9; background: #fff; color: var(--brand); padding: 4px 10px; cursor: pointer; }
+  .btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+  aside { background: var(--card); border-radius: 4px; padding: 10px; position: sticky; top: 10px; }
+  .side-tabs { display: flex; gap: 4px; margin-bottom: 10px; }
+  .side-tabs button { flex: 1; font: inherit; font-size: 12px; padding: 6px; border: 1px solid var(--line); background: #fafafa; cursor: pointer; border-radius: 4px; }
+  .side-tabs button.on { background: #fff; font-weight: 600; border-bottom: 2px solid var(--brand); }
+  .badge { display: inline-block; min-width: 16px; padding: 0 4px; border-radius: 8px; background: var(--red); color: #fff; font-size: 10px; text-align: center; }
+  .badge.o { background: var(--orange); }
+  .alert { border: 1px solid var(--line); border-left: 4px solid var(--red); border-radius: 4px; padding: 8px 10px; margin-bottom: 8px; }
+  .alert.orange { border-left-color: var(--orange); }
+  .alert.ai { border-left-color: #7526e3; }
+  .alert .t { display: flex; justify-content: space-between; font-weight: 600; }
+  .alert .t small { font-weight: 400; color: var(--muted); }
+  .alert p { margin: 4px 0 8px; font-size: 12px; }
+  .alert .actions { display: flex; gap: 6px; }
+  .note { font-size: 11px; color: #7526e3; margin: 0 0 8px; }
+  .activity h3 { font-size: 13px; margin: 12px 0 6px; display: flex; justify-content: space-between; }
+  .activity li { list-style: none; display: flex; justify-content: space-between; gap: 8px; font-size: 12px; padding: 4px 0; border-bottom: 1px solid var(--line); }
+  .activity li::before { content: "✓"; color: var(--green); margin-right: 6px; }
+  .activity li span:first-child { flex: 1; }
+  .activity ul { padding: 0; margin: 0; }
+  .activity small { color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="banner">Reference mock rebuilt with <strong>synthetic data</strong> for discovery. Not the checkpoint 03 prototype.</div>
+
+<header class="global"><div class="logo" aria-hidden="true"></div><input type="search" placeholder="Search..." aria-label="Search"></header>
+<nav class="app" aria-label="App">
+  <span class="name">PSA</span>
+  <a class="active" href="#">Home</a><a href="#">Weekly Summary</a><a href="#">Contacts</a><a href="#">Service Accounts</a>
+  <a href="#">Projects</a><a href="#">Timesheet Entry</a><a href="#">Reports</a><a href="#">Dashboards</a>
+</nav>
+
+<main>
+  <div class="welcome"><h1>Project Manager Home</h1></div>
+  <div class="subtabs">
+    <span>Action Dashboard</span><span>First Customer Contact</span><span>In Progress Projects</span><span>On Hold Projects</span>
+    <span class="active">Staffing Requests</span><span>Milestones</span><span>Approvals</span>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="layout">
+    <div>
+      <section class="list" aria-labelledby="h-staffing">
+        <div class="head">
+          <h2 id="h-staffing">My Resource Requests Being Staffed <span class="count" id="c-staffing"></span></h2>
+          <input type="search" id="q" placeholder="Search this list..." aria-label="Search requests">
+          <span class="meta">PM has not acted yet · Filtered by project manager = current user · refreshes every 30s</span>
+        </div>
+        <div class="chips" id="chips"></div>
+        <div class="scroll"><table>
+          <thead><tr><th>Project</th><th>RR ID</th><th>Status</th><th>Days in Status</th><th>Type</th><th>Resource</th><th>Start Date</th><th>End Date</th><th>Hrs/Day</th><th>Priority</th><th>Role</th></tr></thead>
+          <tbody id="t-staffing"></tbody>
+        </table></div>
+        <div class="pager"><button id="prev">← Previous</button><span id="page"></span><button id="next">Next →</button></div>
+      </section>
+
+      <section class="list awaiting" aria-labelledby="h-awaiting">
+        <div class="head">
+          <h2 id="h-awaiting">My Resource Requests Awaiting Confirmation <span class="count" id="c-awaiting"></span></h2>
+          <span class="meta">PM already acted · Waiting on partner or travel approval</span>
+        </div>
+        <div class="scroll"><table>
+          <thead><tr><th>Project</th><th>RR ID</th><th>Type</th><th>Waiting On</th><th>Resource / Partner</th><th>Match Pool</th><th>Dispatched / Assigned</th><th title="Partner SLA: 48h">Days in Status (SLA 48h)</th><th title="green > 14 · yellow 7–14 · red < 7">Days to Start</th><th>Start Date</th><th>Role</th></tr></thead>
+          <tbody id="t-awaiting"></tbody>
+        </table></div>
+      </section>
+
+      <section class="list staffed" aria-labelledby="h-staffed">
+        <div class="head">
+          <h2 id="h-staffed">My Resource Requests Recently Staffed <span class="count" id="c-staffed"></span></h2>
+          <span class="meta">Assigned & approved · sorted by project</span>
+        </div>
+        <div class="scroll"><table>
+          <thead><tr><th>Project</th><th>RR ID</th><th>Status</th><th>Type</th><th>Resource / Partner</th><th>Match Pool</th><th>Last Modified</th><th>Start Date</th><th>End Date</th><th>Hrs/Day</th><th>Role</th></tr></thead>
+          <tbody id="t-staffed"></tbody>
+        </table></div>
+      </section>
+    </div>
+
+    <aside aria-label="Alerts and actions">
+      <div class="side-tabs">
+        <button class="on" data-tab="alerts">Staffing Alerts <span class="badge" id="b-alerts"></span></button>
+        <button data-tab="predicted">Predicted Actions <span class="badge o" id="b-pred"></span></button>
+      </div>
+      <div id="panel-alerts"></div>
+      <div id="panel-predicted" hidden>
+        <p class="note">Hypothesis: the original mock did not detail this tab. This is where AI may come in (to be validated in the grill).</p>
+      </div>
+      <div class="activity">
+        <h3>Recent Activity <a href="#" style="font-weight:400;font-size:12px">View All</a></h3>
+        <ul id="activity"></ul>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<script>
+// ---------- Synthetic data ----------
+const today = new Date(); today.setHours(0, 0, 0, 0);
+const d = n => { const x = new Date(today); x.setDate(x.getDate() + n); return x; };
+const fmt = x => x.toLocaleDateString('en-US');
+const fmtDT = (n, h) => { const x = d(n); x.setHours(h, 7 * h % 60); return x.toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' }); };
+const R = { eng: 'Implementation Engineer', sr: 'Senior Implementation Engineer', esp: 'Technical Specialist' };
+
+const staffing = [
+  // proj, pid, id, status, days, type, resource, start, end, hrs, prio, role, attempt
+  ['Atlas Logistics', 'PRJ-1001', 'RR-0001', 'Sent', 0, 'Partner', 'Partner Alpha', 80, 89, 2, 'Normal', R.sr],
+  ['Atlas Logistics', 'PRJ-1001', 'RR-0002', 'Processing', 0, 'Partner', '', 80, 89, 2, 'Normal', R.sr],
+  ['Borealis Energy', 'PRJ-1002', 'RR-0003', 'Sent', 0, 'Partner', 'Partner Beta', 23, 110, 5, 'Normal', R.eng],
+  ['Cervantes Insurance', 'PRJ-1003', 'RR-0004', 'Halted', 4, 'Partner', '', 112, 125, 3, 'High', R.eng, 2],
+  ['Delta Retail', 'PRJ-1004', 'RR-0005', 'Ready to Staff', 2, 'Internal', '', 1, 16, 4, 'High', R.sr],
+  ['Star Health', 'PRJ-1005', 'RR-0006', 'Staffed', 1, 'Internal', 'C. Rocha', 84, 91, 2, 'Normal', R.eng],
+  ['Phoenix Telecom', 'PRJ-1006', 'RR-0007', 'Sent', 1, 'Partner', 'Partner Gamma', 99, 104, 3, 'Normal', R.sr],
+  ['Gaia Agro', 'PRJ-1007', 'RR-0008', 'Halted', 3, 'Partner', 'Rejected: Partner Alpha', 120, 130, 2, 'High', R.eng, 2],
+  ['Helios Finance', 'PRJ-1008', 'RR-0009', 'Ready to Staff', 1, 'Internal', '', 59, 74, 2, 'Normal', R.esp],
+  ['Iris Education', 'PRJ-1009', 'RR-0010', 'Pending', 2, 'Partner', '', 3, 18, 4, 'High', R.sr],
+  ['Jupiter Media', 'PRJ-1010', 'RR-0011', 'Sent', 1, 'Partner', 'Partner Beta', 111, 120, 3, 'Normal', R.eng],
+  ['Kappa Chemicals', 'PRJ-1011', 'RR-0012', 'Staffed', 1, 'Internal', 'E. Costa', 125, 135, 2, 'Normal', R.eng],
+  ['Lumen Stores', 'PRJ-1012', 'RR-0013', 'Sent', 1, 'Partner', 'Partner Alpha', 140, 145, 2, 'Normal', R.esp],
+  ['Meridian Transport', 'PRJ-1013', 'RR-0014', 'Halted', 4, 'Partner', 'Rejected: Partner Beta', 21, 31, 3, 'High', R.eng, 3],
+  ['Neptune Mining', 'PRJ-1014', 'RR-0015', 'Ready to Staff', 1, 'Internal', '', 131, 141, 2, 'Normal', R.eng],
+  ['Orion Manufacturing', 'PRJ-1015', 'RR-0016', 'Sent', 1, 'Partner', 'Partner Gamma', 45, 52, 2, 'Normal', R.eng],
+  ['Prairie Foods', 'PRJ-1016', 'RR-0017', 'Ready to Staff', 1, 'Internal', '', 70, 84, 3, 'Normal', R.sr],
+  ['Quasar Software', 'PRJ-1017', 'RR-0018', 'Processing', 0, 'Partner', '', 95, 105, 2, 'Normal', R.eng],
+];
+
+const awaiting = [
+  ['Atlas Logistics', 'PRJ-1001', 'RR-0001', 'Partner', 'Partner Acceptance', 'Partner Alpha', 'Priority Customer', 0, 8, 80, R.sr],
+  ['Borealis Energy', 'PRJ-1002', 'RR-0003', 'Partner', 'Partner Acceptance', 'Partner Beta', 'Active Project', 2, 9, 23, R.eng],
+  ['Ruby Services', 'PRJ-1018', 'RR-0019', 'Internal', 'Travel Approval', 'B. Lima', 'Same Project', 0, 11, 45, R.eng],
+  ['Phoenix Telecom', 'PRJ-1006', 'RR-0007', 'Partner', 'Partner Acceptance', 'Partner Gamma', 'General', 1, 16, 99, R.sr],
+  ['Sirius Construction', 'PRJ-1019', 'RR-0020', 'Internal', 'Travel Approval', 'A. Souza', 'Active Project', 3, 15, 1, R.eng],
+  ['Star Health', 'PRJ-1005', 'RR-0006', 'Internal', 'Travel Approval', 'C. Rocha', 'Priority Customer', 1, 17, 84, R.eng],
+];
+
+const staffed = [
+  ['Ruby Services', 'PRJ-1018', 'RR-0021', 'Staffed', 'Internal', 'A. Souza', 'Active Project', -4, 15, 1, 12, 3, R.eng],
+  ['Sirius Construction', 'PRJ-1019', 'RR-0022', 'Sent', 'Partner', 'Partner Beta', 'Priority Customer', -3, 9, 8, 23, 4, R.sr],
+  ['Thalia Travel', 'PRJ-1020', 'RR-0023', 'Staffed', 'Internal', 'D. Alves', 'General', -5, 11, 15, 33, 2, R.eng],
+  ['Uranus Textiles', 'PRJ-1021', 'RR-0024', 'Sent', 'Partner', 'Partner Gamma', 'Active Project', -6, 16, 19, 27, 3, R.eng],
+];
+
+const alerts = [
+  { kind: 'red', title: 'RR Rejected by Partner', ago: '2m ago', text: 'RR-0014 (Meridian Transport): Partner Beta rejected — "Capacity Limit" in the South Region. Starts in 21 days.', actions: ['Re-Staff Now', 'View RR'] },
+  { kind: 'red', title: 'RR Rejected by Partner', ago: '15m ago', text: 'RR-0008 (Gaia Agro): Partner Alpha rejected — "Skills Mismatch" for on-site scope.', actions: ['Re-Staff Now', 'View RR'] },
+  { kind: 'red', title: 'Missing Cost Rate', ago: '1h ago', text: 'RR-0004 (Cervantes Insurance): no rate found for service SVC-210 in the North Region. Dispatch to partner blocked.', actions: ['Resolve Rate', 'View RR'] },
+  { kind: 'orange', title: 'Travel Not Approved', ago: '3h ago', text: 'A. Souza (Sirius Construction, RR-0020): travel request pending for 6 days. Starts tomorrow; cannot onboard without confirmed travel. Approver: G. Martins (Regional Manager), not yet reviewed.', actions: ['Follow Up', 'View Request'] },
+  { kind: 'red', title: 'Automation Blocked', ago: 'Just now', text: 'RR-0005 (Delta Retail): staffing automation cannot start — project tier is not set. Status: Ready to Staff for 2 days.', actions: ['View Project', 'View RR'] },
+  { kind: 'red', title: 'Start Date Approaching', ago: '1h ago', text: 'RR-0020 (Sirius Construction): starts in 1 day and the assignment is not confirmed. Status: Staffed, travel approval pending.', actions: ['View RR', 'Escalate to RM'] },
+  { kind: 'orange', title: 'RR Stale — No Attempt', ago: 'Today', text: 'RR-0010 (Iris Education): Pending for 2 days with no automation attempt. Check the project configuration and RR prerequisites.', actions: ['Review RR Config', 'View RR'] },
+];
+
+const predicted = [
+  { title: 'Rejection Risk', text: 'RR-0011: Partner Beta rejected 3 of the last 4 RRs with this role and region. Suggestion: also dispatch to Partner Alpha.', actions: ['Apply Suggestion', 'Dismiss'] },
+  { title: 'Start Delay Risk', text: 'RR-0009: average time to staff internal requests for this role is 9 days; 59 days left. No action needed now.', actions: ['View Details'] },
+  { title: 'Missing Prerequisite', text: 'RR-0017: the project has no cost rate for the South Region; dispatch will fail like RR-0004.', actions: ['Resolve Rate'] },
+  { title: 'Best Internal Resource', text: 'RR-0015: E. Costa is available from the start date and has worked with this customer before.', actions: ['Propose Resource', 'Dismiss'] },
+  { title: 'Automatic Follow-Up', text: 'RR-0020: travel approval stuck for 6 days. Send a reminder to the approver?', actions: ['Send Reminder'] },
+];
+
+const activity = [
+  ['RR-0001 dispatched to Partner Alpha (Atlas Logistics)', '1h ago'],
+  ['RR-0003 re-staffed after rate fix (Borealis Energy)', '2h ago'],
+  ['Bulk halt cleared — 3 jobs resolved', '3h ago'],
+  ['RR-0019 matched via Priority Customer pool', '4h ago'],
+];
+
+// ---------- Rendering ----------
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const typePill = t => `<span class="pill ${t === 'Partner' ? 'partner' : 'internal'}">${t}</span>`;
+const statusCls = { 'Ready to Staff': 'ready', 'Pending': 'pending', 'Staffed': 'staffed' };
+const rrCount = staffing.reduce((m, r) => (m[r[1]] = (m[r[1]] || 0) + 1, m), {});
+
+function statusCell(r) {
+  if (r[3] === 'Halted') return `<span class="pill halted">Halted</span> <span class="pill ${r[12] >= 3 ? 'attempt' : 'halted'}">Attempt ${r[12]}${r[12] >= 3 ? ' ⚠' : ''}</span>`;
+  return `<span class="dot ${statusCls[r[3]] || ''}">${r[3]}</span>`;
+}
+
+const filters = {
+  'All': () => true,
+  'Partner Only': r => r[5] === 'Partner',
+  'Internal Only': r => r[5] === 'Internal',
+  'Halted': r => r[3] === 'Halted',
+  'Ready to Staff': r => r[3] === 'Ready to Staff',
+};
+let active = 'All', page = 0; const PER = 10;
+
+function renderChips() {
+  document.getElementById('chips').innerHTML = Object.entries(filters).map(([k, f]) =>
+    `<button class="chip ${k === active ? 'on' : ''}" data-f="${k}">${k} (${staffing.filter(f).length})</button>`).join('');
+}
+
+function renderStaffing() {
+  const q = document.getElementById('q').value.toLowerCase();
+  const rows = staffing.filter(filters[active]).filter(r => !q || r.join(' ').toLowerCase().includes(q));
+  const pages = Math.max(1, Math.ceil(rows.length / PER)); page = Math.min(page, pages - 1);
+  document.getElementById('t-staffing').innerHTML = rows.slice(page * PER, page * PER + PER).map(r => {
+    const hot = r[3] === 'Halted' || r[10] === 'High';
+    const attn = !r[6] && r[4] >= 2 && r[3] !== 'Halted';
+    return `<tr class="${hot ? 'hot' : ''} ${attn ? 'attn' : ''}">
+      <td><a href="#">${esc(r[0])} · ${r[1]}</a>${rrCount[r[1]] > 1 ? ` <span class="count">${rrCount[r[1]]} RRs</span>` : ''}</td>
+      <td><a href="#">${r[2]}</a></td><td>${statusCell(r)}</td>
+      <td class="${r[4] >= 2 ? 'warn' : ''}">${r[4]}</td><td>${typePill(r[5])}</td><td>${esc(r[6]) || '—'}</td>
+      <td>${fmt(d(r[7]))}</td><td>${fmt(d(r[8]))}</td><td>${r[9].toFixed(2)}</td>
+      <td class="${r[10] === 'High' ? 'high' : ''}">${r[10]}</td><td>${r[11]}</td></tr>`;
+  }).join('');
+  document.getElementById('page').textContent = `Page ${page + 1} of ${pages} · ${rows.length} items`;
+  document.getElementById('prev').disabled = page === 0;
+  document.getElementById('next').disabled = page >= pages - 1;
+}
+
+function renderAwaiting() {
+  document.getElementById('t-awaiting').innerHTML = awaiting.map(r => {
+    const b = r[9] > 14 ? 'g' : r[9] >= 7 ? 'y' : 'r';
+    return `<tr class="${r[9] < 7 ? 'hot' : ''}"><td><a href="#">${esc(r[0])} · ${r[1]}</a></td><td><a href="#">${r[2]}</a></td>
+      <td>${typePill(r[3])}</td><td><span class="pill wait">${r[4]}</span></td><td>${esc(r[5])}</td>
+      <td><span class="pill pool">${r[6]}</span></td><td>${fmtDT(-r[7], r[8])}</td>
+      <td class="${r[7] >= 2 ? 'warn' : ''}">${r[7]}</td><td><span class="bucket ${b}">${r[9]}</span></td>
+      <td>${fmt(d(r[9]))}</td><td>${r[10]}</td></tr>`;
+  }).join('');
+}
+
+function renderStaffed() {
+  document.getElementById('t-staffed').innerHTML = staffed.map(r =>
+    `<tr><td><a href="#">${esc(r[0])} · ${r[1]}</a></td><td><a href="#">${r[2]}</a></td>
+      <td><span class="pill ok">${r[3]}</span></td><td>${typePill(r[4])}</td><td>${esc(r[5])}</td>
+      <td><span class="pill pool">${r[6]}</span></td><td>${fmtDT(r[7], r[8])}</td>
+      <td>${fmt(d(r[9]))}</td><td>${fmt(d(r[10]))}</td><td>${r[11].toFixed(2)}</td><td>${r[12]}</td></tr>`).join('');
+}
+
+function card(a, cls) {
+  return `<div class="alert ${cls}"><div class="t">${esc(a.title)} <small>${a.ago || ''}</small></div>
+    <p>${esc(a.text)}</p><div class="actions">${a.actions.map((x, i) => `<button class="btn ${i === 0 ? 'primary' : ''}">${x}</button>`).join('')}</div></div>`;
+}
+
+function renderSide() {
+  document.getElementById('panel-alerts').innerHTML = alerts.map(a => card(a, a.kind === 'orange' ? 'orange' : '')).join('');
+  document.getElementById('panel-predicted').insertAdjacentHTML('beforeend', predicted.map(a => card(a, 'ai')).join(''));
+  document.getElementById('b-alerts').textContent = alerts.length;
+  document.getElementById('b-pred').textContent = predicted.length;
+  document.getElementById('activity').innerHTML = activity.map(([t, w]) => `<li><span>${t}</span><small>${w}</small></li>`).join('');
+}
+
+function renderKpis() {
+  const projects = new Set(staffing.map(r => r[1])).size;
+  const halted = staffing.filter(r => r[3] === 'Halted').length;
+  const wP = awaiting.filter(r => r[4] === 'Partner Acceptance').length;
+  const startWeek = [...staffing, ...awaiting].filter(r => { const s = r.length > 11 ? r[7] : r[9]; return s >= 0 && s <= 7; });
+  const k = [
+    ['', 'Open RRs', staffing.length, `Across ${projects} projects`],
+    ['green', 'Sent Today', 12, '▲ 3 vs yesterday'],
+    ['red', 'Halted / Blocked', halted, 'Require action now'],
+    ['orange', 'Awaiting Confirmation', awaiting.length, `Partner: ${wP} · Travel: ${awaiting.length - wP}`],
+    ['teal', 'Starting This Week', startWeek.length, 'Partner and internal'],
+  ];
+  document.getElementById('kpis').innerHTML = k.map(([c, l, v, h]) =>
+    `<div class="kpi ${c}"><div class="label">${l}</div><div class="value">${v}</div><div class="hint">${h}</div></div>`).join('');
+  document.getElementById('c-staffing').textContent = staffing.length;
+  document.getElementById('c-awaiting').textContent = awaiting.length;
+  document.getElementById('c-staffed').textContent = staffed.length;
+}
+
+document.getElementById('chips').addEventListener('click', e => {
+  const f = e.target.closest('[data-f]'); if (!f) return;
+  active = f.dataset.f; page = 0; renderChips(); renderStaffing();
+});
+document.getElementById('q').addEventListener('input', () => { page = 0; renderStaffing(); });
+document.getElementById('prev').onclick = () => { page--; renderStaffing(); };
+document.getElementById('next').onclick = () => { page++; renderStaffing(); };
+document.querySelector('.side-tabs').addEventListener('click', e => {
+  const b = e.target.closest('[data-tab]'); if (!b) return;
+  document.querySelectorAll('.side-tabs button').forEach(x => x.classList.toggle('on', x === b));
+  document.getElementById('panel-alerts').hidden = b.dataset.tab !== 'alerts';
+  document.getElementById('panel-predicted').hidden = b.dataset.tab !== 'predicted';
+});
+
+renderKpis(); renderChips(); renderStaffing(); renderAwaiting(); renderStaffed(); renderSide();
+</script>
+</body>
+</html>
