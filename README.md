@@ -1,8 +1,20 @@
 # pm-journey
 
-> Nome da startup e proposta de valor: **a definir** no Lean Canvas (checkpoint 01).
+> Nome da iniciativa e proposta de valor: **a definir** no Lean Canvas (checkpoint 01).
 
 Projeto do bootcamp **Software Engineering Project** do MBA em Engenharia de Software da Faculdade Impacta, desenvolvido com IA seguindo o método AI-DLC.
+
+## Intraempreendedorismo, não startup
+
+O bootcamp pede uma "startup com IA". Este POD aplica a mesma regra como **iniciativa de intraempreendedorismo**: não há empresa nova. Somos colaboradores que identificaram uma oportunidade de melhorar um processo dentro da empresa onde trabalhamos.
+
+O que muda em relação a uma startup:
+
+- **Cliente:** áreas e pessoas internas, não um mercado externo. A persona é real e acessível.
+- **Receita:** é substituída por **valor para o negócio** (tempo economizado, retrabalho evitado, prazo cumprido). O Lean Canvas e o pitch usam essa lente.
+- **Confidencialidade:** o produto é descrito de forma genérica, como um problema de mercado (ver seção 1 do [AGENTS.md](AGENTS.md)).
+
+As outras regras do bootcamp continuam iguais: problema real, IA como parte da proposta de valor e MVP rodando.
 
 ## POD
 
