@@ -17,8 +17,9 @@
 | 2026-11-16 | Regra de confidencialidade atualizada com a decisão de repositório público | #1 |
 | 2026-11-20 | Mock de referência anonimizado e roteiro para o grill do problema | #2 |
 | 2026-11-20 | ADR-0003 (app Lightning interno como modelo de acesso) | #2 |
-| 2026-11-21 | Análise do PDF da Aula 01 contra o repositório, levantando o que faltava para o checkpoint | este PR |
-| 2026-11-21 | Enquadramento do projeto como intraempreendedorismo no README e criação deste diário | este PR |
+| 2026-11-21 | Análise do PDF da Aula 01 contra o repositório, levantando o que faltava para o checkpoint | #3 |
+| 2026-11-21 | Enquadramento do projeto como intraempreendedorismo no README e criação deste diário | #3 |
+| 2026-11-21 | Grill do problema (11 perguntas, uma por vez, com recomendação) e preenchimento de Lean Canvas, hipótese, esqueleto do PRD e README a cada ramo fechado | #3 |
 
 ## 2. Decisões do POD
 
@@ -46,6 +47,10 @@
 | Revisão de tudo o que o agente escreveu antes de entrar no repositório | O repositório é público, e o agente não distingue sozinho o que é sensível | Nenhum termo interno chegou à `main` |
 | Retirada dos termos técnicos internos | Confidencialidade (AGENTS.md, seção 1) | Os artefatos usam apenas linguagem genérica de mercado |
 | Revisão da solução proposta pelo agente | A solução partia de um problema descrito sem acurácia | A solução passa a ser validada no grill do problema antes de virar PRD |
+| Grill P3: o POD definiu a métrica principal como **número de cliques** (de 10 a 12 para 2 a 3), em vez da recomendação do agente (tempo de reação) | O POD conhece a dor real: o esforço de navegação para gerenciar RRs, recursos e projetos | Cliques viraram a métrica principal e um critério de aceite; o tempo de reação ficou como métrica complementar |
+| Grill P8: o POD exigiu a **visão inicial unificada** (indicadores + lista numa só tela) como Must; o agente tinha deixado os indicadores como Should | A visão única é a resposta à dor de visibilidade fragmentada | Virou o RF1 do PRD, com critério de aceite próprio |
+| Grill P11: o POD considerou irreal a meta de carga de 2 s proposta pelo agente e definiu **10 s** | O volume de dados da carteira é grande | RNF1 ficou com 10 s para a visão completa, com os dados aparecendo antes da IA |
+| Grill P7: o agente apontou o nome do fornecedor do PSA e da ferramenta de chat antes de gravar, e propôs versões genéricas | Confidencialidade (AGENTS.md, seção 1) | Os dois nomes ficaram fora do Lean Canvas |
 
 ## 5. Aprendizados que vão para o AGENTS.md
 
@@ -57,10 +62,11 @@ Propostas do agente a partir dos erros acima. O POD decide quais entram:
 
 ## 6. Pendências para fechar o checkpoint
 
-- [ ] Grill do problema (`/grill-me` sobre a seção 8 do [roteiro](../produto/roteiro-grill.md))
-- [ ] Lean Canvas com a lente de intraempreendedorismo
-- [ ] Hipótese no formato "Acreditamos que..."
-- [ ] Esqueleto do PRD com os 6 pilares
-- [ ] Nome da iniciativa, proposta de valor e um dono por papel no README
+- [x] Grill do problema (`/grill-me` sobre a seção 8 do [roteiro](../produto/roteiro-grill.md)), com 11 perguntas
+- [x] [Lean Canvas](../produto/lean-canvas.md) com a lente de intraempreendedorismo
+- [x] [Hipótese](../produto/hipotese.md) no formato "Acreditamos que..."
+- [x] [Esqueleto do PRD](../produto/prd.md) com os 6 pilares
+- [x] Nome da iniciativa, proposta de valor e um dono por papel no README
+- [ ] Validação da divisão de papéis pela Nicoli (no PR)
 - [ ] Proteção da `main` configurada pela dona do repositório
 - [ ] Tag `checkpoint-01` na `main`, até as 22h40
