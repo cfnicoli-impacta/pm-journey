@@ -38,6 +38,7 @@ O agente propõe e executa. **O POD decide, revisa e responde pelo resultado** (
 | Plataforma | Salesforce (pré-requisito do projeto) | [ADR-0001](docs/adr/0001-salesforce-como-plataforma.md) |
 | Linguagens | Apex e LWC, API 68.0 | `sfdx-project.json` |
 | Código-fonte | `src/` (pasta de pacote do Salesforce DX) | [ADR-0002](docs/adr/0002-estrutura-do-repositorio.md) |
+| Acesso | App Lightning interno, controlado por permission set | [ADR-0003](docs/adr/0003-app-lightning-interno.md) |
 | Testes | Testes Apex e Jest (`sfdx-lwc-jest`) | |
 | Qualidade | ESLint, Prettier, Husky com lint-staged | `package.json` |
 | Arquitetura | LikeC4 (C1 e C2) em `architecture/` | |
