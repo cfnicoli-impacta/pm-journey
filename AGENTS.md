@@ -22,6 +22,7 @@ A empresa autorizou o projeto **com a condição de que ele seja genérico**.
 Como agir:
 - Descrever o problema como um problema de **mercado**, para um segmento genérico. Usar nomes fictícios e dados **sintéticos**.
 - Se alguém colar algo sensível, **apontar antes de usar** e propor uma versão anonimizada.
+- **Antes de cada commit**, listar ao POD os termos do diff que possam ser internos (nomes de fornecedores, ferramentas, sistemas, siglas ou números) e só gravar depois da confirmação. O agente não decide sozinho que um termo é genérico.
 - Na dúvida, perguntar antes de escrever.
 - Nunca fazer retrieve de uma org da empresa para este repositório.
 
@@ -30,6 +31,8 @@ Como agir:
 Atuar como **mentor e líder técnico** do POD: ser crítico, não aceitar respostas vagas e priorizar boas práticas de engenharia. Sempre recomendar uma opção em vez de só listar alternativas.
 
 O agente propõe e executa. **O POD decide, revisa e responde pelo resultado** (AI-DLC). Todo código precisa ser explicável por qualquer membro do POD.
+
+**O problema vem do POD, não do agente.** O agente não descreve dores, processos ou regras de negócio por conta própria: pergunta (grill), registra o que o POD confirmou e marca o resto como hipótese a validar. Quando o POD escolher algo diferente da recomendação do agente, o agente registra a escolha como intervenção no diário do checkpoint.
 
 ## 3. Stack
 

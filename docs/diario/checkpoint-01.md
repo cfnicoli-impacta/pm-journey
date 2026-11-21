@@ -54,11 +54,10 @@
 
 ## 5. Aprendizados que vão para o AGENTS.md
 
-Propostas do agente a partir dos erros acima. O POD decide quais entram:
+Aprovadas pelo POD e incluídas no [AGENTS.md](../../AGENTS.md) no PR #3:
 
-- **Problema vem do POD, não do agente.** O agente não descreve o problema por conta própria: ele pergunta (grill) e registra o que o POD confirmou, marcando o resto como hipótese.
-- **Revisão de confidencialidade antes de cada commit.** O agente lista os termos que podem ser internos e pede confirmação ao POD antes de gravar, em vez de decidir sozinho que são genéricos.
-- _(POD)_ Completar ou ajustar.
+- **Problema vem do POD, não do agente** (seção 2). O agente pergunta, registra o que foi confirmado, marca o resto como hipótese e registra no diário as escolhas do POD diferentes da recomendação.
+- **Revisão de confidencialidade antes de cada commit** (seção 1). O agente lista os termos que podem ser internos e só grava depois da confirmação do POD.
 
 ## 6. Pendências para fechar o checkpoint
 
