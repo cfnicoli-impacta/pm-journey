@@ -1,15 +1,33 @@
 # pm-journey
 
-> Nome da startup e proposta de valor: **a definir** no Lean Canvas (checkpoint 01).
+> **A próxima ação certa para cada requisição de recurso, explicada pela IA e a até 3 cliques.**
+
+Iniciativa de intraempreendedorismo para Gerentes de Projetos e Gerentes de Recursos de empresas de serviços profissionais de tecnologia. Ver [Lean Canvas](docs/produto/lean-canvas.md), [hipótese](docs/produto/hipotese.md) e [PRD](docs/produto/prd.md).
 
 Projeto do bootcamp **Software Engineering Project** do MBA em Engenharia de Software da Faculdade Impacta, desenvolvido com IA seguindo o método AI-DLC.
 
+## Intraempreendedorismo, não startup
+
+O bootcamp pede uma "startup com IA". Este POD aplica a mesma regra como **iniciativa de intraempreendedorismo**: não há empresa nova. Somos colaboradores que identificaram uma oportunidade de melhorar um processo dentro da empresa onde trabalhamos.
+
+O que muda em relação a uma startup:
+
+- **Cliente:** áreas e pessoas internas, não um mercado externo. A persona é real e acessível.
+- **Receita:** é substituída por **valor para o negócio** (tempo economizado, retrabalho evitado, prazo cumprido). O Lean Canvas e o pitch usam essa lente.
+- **Confidencialidade:** o produto é descrito de forma genérica, como um problema de mercado (ver seção 1 do [AGENTS.md](AGENTS.md)).
+
+As outras regras do bootcamp continuam iguais: problema real, IA como parte da proposta de valor e MVP rodando.
+
 ## POD
 
-| Membro | Papéis |
-|---|---|
-| Nicoli | Product Owner · Tech Lead · Quality & Ops |
-| Matheus | Product Owner · Tech Lead · Quality & Ops |
+POD de 2 pessoas, aceito pelo professor como exceção à regra de 3.
+
+| Membro | Papel | Responde por | Revisa |
+|---|---|---|---|
+| Matheus | Product Owner | PRD, histórias, entrevistas e validação com usuários | CI, testes e deploy |
+| Nicoli | Tech Lead · Quality & Ops | AGENTS.md, arquitetura C1/C2, CI, testes, deploy e métricas | PRD e histórias |
+
+Os dois operam agentes e revisam PRs. O papel define quem responde pelo artefato.
 
 ## MVP
 
